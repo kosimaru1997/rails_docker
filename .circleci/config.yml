@@ -6,16 +6,16 @@ orbs:
 jobs:
   build:
     docker:
-      - image: circleci/ruby:2.7
-    working_directory: ~/rails-docker-kyt/src
+      - image: circleci/ruby:latest
+    working_directory: ~/rails-docker/src
     steps:
       - checkout:
-          path: ~/rails-docker-kyt
+          path: ~/rails-docker
       - ruby/install-deps
 
   test:
     docker:
-      - image: circleci/ruby:2.7
+      - image: circleci/ruby:latest
       - image: circleci/mysql:5.5
         environment:
           MYSQL_ROOT_PASSWORD: password
@@ -26,10 +26,10 @@ jobs:
       BUNDLE_RETRY: "3"
       APP_DATABASE_HOST: "127.0.0.1"
       RAILS_ENV: test
-    working_directory: ~/rails-docker-kyt/src
+    working_directory: ~/rails-docker/src
     steps:
       - checkout:
-          path: ~/rails-docker-kyt
+          path: ~/rails-docker
       - ruby/install-deps
       - run:
           name: Database setup
@@ -40,7 +40,7 @@ jobs:
 
   deploy:
     docker:
-      - image: circleci/ruby:2.7
+      - image: circleci/ruby:latest
     steps:
       - checkout
       - setup_remote_docker:
